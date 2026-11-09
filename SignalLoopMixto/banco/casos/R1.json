@@ -1,0 +1,56 @@
+{
+  "caso": "R1",
+  "nombre": "Cash out se cierra con dispensado exitoso",
+  "conjunto": "reservado",
+  "origen": "XFS",
+  "descripcion": "La casetera P2 se vacía y después dispensa con éxito sin evento REPLENISH. El ticket debe cerrarse. No se usa para aprender.",
+  "eventos": [
+    {
+      "event_id": "XFS-ATM004-R1-0001",
+      "origen": "XFS",
+      "dispositivo": "ATM004",
+      "ts": "2026-11-09T14:05:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Alarma",
+          "sensor": "Dispensador",
+          "status": {
+            "condicion": "CashOut",
+            "casetera": "P2"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM004-R1-0002",
+      "origen": "XFS",
+      "dispositivo": "ATM004",
+      "ts": "2026-11-09T14:33:20-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Operacion",
+          "sensor": "Dispensador",
+          "status": {
+            "dispensa": [
+              {
+                "casetera": "P2",
+                "billetes": 4
+              }
+            ],
+            "resultado": "OK"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    }
+  ],
+  "fin": "2026-11-09T15:00:00-06:00",
+  "esperado": {
+    "tickets_creados": 1,
+    "tickets_abiertos": 0,
+    "cierre_por": "dispensa_exitosa"
+  }
+}

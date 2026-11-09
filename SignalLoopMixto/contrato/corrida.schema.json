@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "signalloop/corrida.schema.json",
+  "title": "Corrida",
+  "description": "Una línea de resultados/corridas.jsonl. La escribe el intérprete: una por caso del banco en cada lote.",
+  "type": "object",
+  "required": ["run_id", "lote", "version", "caso", "lecciones_activas", "esperado", "obtenido", "pasa", "ts"],
+  "properties": {
+    "run_id": {"type": "string", "description": "Único por corrida. Ej.: v1-20261109T160501-C1"},
+    "lote": {"type": "string", "description": "Agrupa las corridas de una misma pasada por el banco. Todas las líneas del lote comparten lote, version, lecciones_activas y candidata."},
+    "version": {"type": "string", "description": "Versión del intérprete, tomada de lecciones/versiones.json (campo actual)."},
+    "caso": {"type": "string", "description": "Id del caso en banco/casos/<caso>.json"},
+    "conjunto": {"enum": ["banco", "reservado"], "description": "Se copia del caso. Si falta, el Aprendiz lo lee del banco."},
+    "lecciones_activas": {"type": "array", "items": {"type": "string"}, "description": "Códigos aplicados en esta corrida, sin contar la candidata."},
+    "candidata": {"type": ["string", "null"], "description": "Código de la lección candidata aplicada además de las activas, o null en una corrida normal."},
+    "sin": {"type": "array", "items": {"type": "string"}, "description": "Lecciones desactivadas a propósito (ablación). Opcional."},
+    "esperado": {"$ref": "#/$defs/conteo"},
+    "obtenido": {"$ref": "#/$defs/conteo"},
+    "pasa": {"type": "boolean", "description": "true si obtenido.tickets_creados y obtenido.tickets_abiertos coinciden con lo esperado."},
+    "senales": {"type": "array", "items": {"enum": ["duplicado", "sin_cierre", "falso_negativo", "alerta_falsa"]}, "description": "Opcional. Si falta, el Aprendiz las deduce de esperado y obtenido."},
+    "tickets": {"type": "array", "items": {"$ref": "#/$defs/ticket"}, "description": "Opcional pero recomendado: es la evidencia que cita la lección."},
+    "ts": {"type": "string", "format": "date-time"},
+    "actor": {"type": "string", "description": "Quién produjo la corrida. Ej.: interprete, interprete_simulado"}
+  },
+  "$defs": {
+    "conteo": {
+      "type": "object",
+      "required": ["tickets_creados", "tickets_abiertos"],
+      "properties": {
+        "tickets_creados": {"type": "integer", "minimum": 0},
+        "tickets_abiertos": {"type": "integer", "minimum": 0},
+        "cierre_por": {"type": "string"}
+      }
+    },
+    "ticket": {
+      "type": "object",
+      "required": ["id", "dispositivo", "sensor", "motivo", "estado"],
+      "properties": {
+        "id": {"type": "string"},
+        "dispositivo": {"type": "string"},
+        "sensor": {"type": "string"},
+        "motivo": {"type": "string"},
+        "estado": {"enum": ["abierto", "cerrado"]},
+        "abierto_en": {"type": "string"},
+        "cerrado_en": {"type": ["string", "null"]},
+        "abierto_por_evento": {"type": ["string", "null"]},
+        "cerrado_por_evento": {"type": ["string", "null"]},
+        "cierre_por": {"type": ["string", "null"]},
+        "reaperturas": {"type": "integer"}
+      }
+    }
+  }
+}

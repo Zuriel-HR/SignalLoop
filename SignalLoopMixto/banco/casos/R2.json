@@ -1,0 +1,82 @@
+{
+  "caso": "R2",
+  "nombre": "Caldera intermitente (flapping)",
+  "conjunto": "reservado",
+  "origen": "IoT",
+  "descripcion": "El quemador falla y se recupera dos veces. Debe quedar un solo ticket, cerrado. No se usa para aprender.",
+  "eventos": [
+    {
+      "event_id": "IoT-CAL001-R2-0001",
+      "origen": "IoT",
+      "dispositivo": "CAL001",
+      "ts": "2026-11-09T14:00:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Alarma",
+          "sensor": "Quemador",
+          "status": {
+            "condicion": "FallaIgnicion"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "IoT-CAL001-R2-0002",
+      "origen": "IoT",
+      "dispositivo": "CAL001",
+      "ts": "2026-11-09T14:00:45-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Recuperacion",
+          "sensor": "Quemador",
+          "status": {
+            "condicion": "FallaIgnicion"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "IoT-CAL001-R2-0003",
+      "origen": "IoT",
+      "dispositivo": "CAL001",
+      "ts": "2026-11-09T14:01:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Alarma",
+          "sensor": "Quemador",
+          "status": {
+            "condicion": "FallaIgnicion"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "IoT-CAL001-R2-0004",
+      "origen": "IoT",
+      "dispositivo": "CAL001",
+      "ts": "2026-11-09T14:02:15-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Recuperacion",
+          "sensor": "Quemador",
+          "status": {
+            "condicion": "FallaIgnicion"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    }
+  ],
+  "fin": "2026-11-09T14:10:00-06:00",
+  "esperado": {
+    "tickets_creados": 1,
+    "tickets_abiertos": 0
+  }
+}
