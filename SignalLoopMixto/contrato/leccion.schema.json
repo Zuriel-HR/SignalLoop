@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "signalloop/leccion.schema.json",
+  "title": "Lección",
+  "description": "Regla declarativa en lecciones/{candidatas,activas,rechazadas}/<codigo>.json. La escribe el Aprendiz; el intérprete solo la lee.",
+  "type": "object",
+  "required": ["codigo", "titulo", "tipo", "aplica_a", "regla", "evidencia", "estado", "creada_por"],
+  "properties": {
+    "codigo": {"type": "string", "pattern": "^L[0-9]+$"},
+    "titulo": {"type": "string"},
+    "hipotesis": {"type": "string"},
+    "tipo": {"enum": ["deduplicacion", "ciclo_de_vida", "flapping", "silencio", "umbral"]},
+    "aplica_a": {
+      "type": "object",
+      "required": ["origen"],
+      "properties": {"origen": {"type": "array", "items": {"type": "string"}, "minItems": 1, "description": "[\"*\"] = cualquier origen"}}
+    },
+    "regla": {"type": "object"},
+    "evidencia": {
+      "type": "object",
+      "required": ["lote", "run_ids", "casos", "senales"],
+      "properties": {
+        "lote": {"type": "string"},
+        "run_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "casos": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "senales": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "estado": {"enum": ["candidata", "activa", "rechazada"]},
+    "creada_por": {"enum": ["sistema", "equipo"]},
+    "propuesta_por": {"type": "string", "description": "plantilla | llm:<modelo> | equipo"},
+    "version_origen": {"type": "string"},
+    "version_destino": {"type": ["string", "null"]},
+    "creada_en": {"type": "string"},
+    "validacion": {"type": "object"},
+    "motivo_rechazo": {"type": "string"}
+  },
+  "allOf": [
+    {"if": {"properties": {"tipo": {"const": "deduplicacion"}}},
+     "then": {"properties": {"regla": {"required": ["clave", "ventana_s"],
+       "properties": {"clave": {"type": "array", "items": {"type": "string"}, "minItems": 1}, "ventana_s": {"type": "number", "exclusiveMinimum": 0}}}}}},
+    {"if": {"properties": {"tipo": {"const": "ciclo_de_vida"}}},
+     "then": {"properties": {"regla": {"required": ["abre", "cierra_con"],
+       "properties": {"abre": {"$ref": "#/$defs/condicion"}, "cierra_con": {"type": "array", "items": {"$ref": "#/$defs/condicion"}, "minItems": 1}}}}}},
+    {"if": {"properties": {"tipo": {"const": "flapping"}}},
+     "then": {"properties": {"regla": {"required": ["abre", "cierra_con", "reabre_en_s"],
+       "properties": {"abre": {"$ref": "#/$defs/condicion"}, "cierra_con": {"type": "array", "items": {"$ref": "#/$defs/condicion"}, "minItems": 1}, "reabre_en_s": {"type": "number", "exclusiveMinimum": 0}}}}}},
+    {"if": {"properties": {"tipo": {"const": "silencio"}}},
+     "then": {"properties": {"regla": {"required": ["latido", "max_silencio_s", "motivo"],
+       "properties": {"latido": {"$ref": "#/$defs/condicion"}, "max_silencio_s": {"type": "number", "exclusiveMinimum": 0}, "motivo": {"type": "string"}}}}}},
+    {"if": {"properties": {"tipo": {"const": "umbral"}}},
+     "then": {"properties": {"regla": {"required": ["dispara", "motivo"],
+       "properties": {"dispara": {"$ref": "#/$defs/condicion"}, "motivo": {"type": "string"}}}}}}
+  ],
+  "$defs": {
+    "condicion": {
+      "type": "object",
+      "description": "Se evalúa contra un elemento de evento.grupo. Todas las claves presentes deben cumplirse.",
+      "properties": {
+        "tipo_evento": {"type": ["string", "array"]},
+        "sensor": {"type": ["string", "array"]},
+        "campo": {"type": "string", "description": "Ruta con puntos dentro del elemento del grupo. Ej.: status.evento"},
+        "igual": {},
+        "en": {"type": "array"},
+        "mayor_que": {"type": "number"},
+        "menor_que": {"type": "number"},
+        "existe": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

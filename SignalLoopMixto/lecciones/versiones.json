@@ -1,0 +1,13 @@
+{
+  "actual": "v0",
+  "historial": [
+    {
+      "version": "v0",
+      "lecciones": [],
+      "padre": null,
+      "creado_por": "equipo",
+      "nota": "reglas base del intérprete",
+      "ts": "2026-11-09T15:10:57-06:00"
+    }
+  ]
+}
