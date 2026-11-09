@@ -3,7 +3,7 @@
 SignalLoop uses one PostgreSQL database named `signalloop` with two schemas:
 
 - `project`: agent systems, immutable generations, datasets, evaluation runs and per-case results, evidence-backed lessons, change decisions, mutation statistics, playbooks, and transfer experiments.
-- `simulator`: synthetic scenarios, ATMs, tickets, XFS/I/O error catalog, runbooks, logs, transactions, expected outcomes, and frozen dataset exports.
+- `simulator`: synthetic scenarios, ATMs and generic device assets, tickets, XFS/IoT/SNMP error catalog, runbooks, logs, ATM transactions, expected outcomes, and frozen dataset exports.
 
 The simulator writes scenario data into `simulator`. The runner writes execution and evaluation records into `project`. Keep expected outcomes out of the model-facing input; use them only in the evaluator. Keep the `test` split frozen and out of the mutation loop.
 
@@ -26,7 +26,7 @@ psql -d signalloop -c '\dt project.*'
 psql -d signalloop -c '\dt simulator.*'
 ```
 
-The initial schema contains 15 project tables and 9 simulator tables. The migration file is versioned so later structural changes can be delivered as new migration files. Do not commit PostgreSQL dumps, `.env` files, passwords, or real customer data.
+Migration `V001` creates 15 project tables and 9 simulator tables. `V002` extends simulator logs and assets for IoT and SNMP sources. Apply new migrations in order. Do not commit PostgreSQL dumps, `.env` files, passwords, or real customer data.
 
 ## Connection configuration
 

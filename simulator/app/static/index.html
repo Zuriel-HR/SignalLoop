@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101c2b">
+  <title>SignalLoop Simulator · XFS, IoT y SNMP</title>
+  <link rel="icon" type="image/svg+xml" href="/static/signalloop-icono-negro.svg">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Inicio de SignalLoop Simulator">
+        <img class="brand-logo" src="/static/signalloop-logo-blanco.svg" alt="SignalLoop">
+        <span class="brand-caption">SIMULATOR</span>
+      </a>
+      <div class="workspace-label">ESPACIO DE TRABAJO</div>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <a class="nav-item active" href="#overview"><span class="nav-icon">◫</span> Resumen</a>
+        <a class="nav-item" href="#generator"><span class="nav-icon">✳</span> Crear escenarios</a>
+        <a class="nav-item" href="#scenarios"><span class="nav-icon">▤</span> Escenarios <span class="nav-count" id="navCount">0</span></a>
+      </nav>
+      <div class="side-spacer"></div>
+      <div class="sidebar-note">
+        <span class="note-icon">⌁</span>
+        <strong>Solo datos sintéticos</strong>
+        <p>Eventos sintéticos de XFS, IoT y SNMP; sin datos reales ni de producción.</p>
+      </div>
+      <div class="sidebar-footer"><span class="tiny-pulse"></span> ENTORNO LOCAL <span class="version">v0.1</span></div>
+    </aside>
+
+    <main class="main-area" id="overview">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>SignalLoop</span><span class="crumb-slash">/</span><strong>Simulador</strong></div>
+        <div class="top-actions">
+          <div class="db-status" id="dbStatus"><span class="status-dot"></span><span>Conectando a PostgreSQL…</span></div>
+          <div class="avatar">SL</div>
+        </div>
+      </header>
+
+      <section class="page-heading">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> INTELIGENCIA ADAPTATIVA PARA CAJEROS</div>
+          <h1>Simulador de eventos de dispositivos</h1>
+          <p class="heading-copy">Genera eventos sintéticos reproducibles para XFS, IoT y SNMP; revisa sus señales y prepara divisiones para evaluar agentes.</p>
+        </div>
+        <div class="heading-side"><span class="seed-icon">✳</span><span><b>Generación con semilla</b><small>Misma semilla, mismos casos</small></span></div>
+      </section>
+
+      <section class="stats-grid" aria-label="Resumen de datos">
+        <article class="stat-card"><div class="stat-label">ESCENARIOS <span class="stat-icon violet">▤</span></div><div class="stat-value" id="statScenarios">—</div><div class="stat-foot">Guardados en este espacio</div></article>
+        <article class="stat-card"><div class="stat-label">CASOS SINTÉTICOS <span class="stat-icon teal">⌁</span></div><div class="stat-value" id="statTickets">—</div><div class="stat-foot">En todos los escenarios</div></article>
+        <article class="stat-card"><div class="stat-label">CASOS DE PRUEBA <span class="stat-icon amber">◈</span></div><div class="stat-value" id="statTests">—</div><div class="stat-foot">Reservados para evaluación final</div></article>
+        <article class="stat-card"><div class="stat-label">ORIGEN DE DATOS <span class="stat-icon blue">◎</span></div><div class="stat-value stat-text">SIMULADO</div><div class="stat-foot">Sin datos de producción</div></article>
+      </section>
+
+      <div class="section-title" id="generator"><div><span class="section-kicker">01 / GENERAR</span><h2>Constructor de escenarios</h2></div><span class="section-caption">Configura eventos sintéticos para XFS, IoT y SNMP</span></div>
+      <section class="builder-grid">
+        <form class="builder-card" id="scenarioForm">
+          <div class="card-head"><div class="head-icon">✳</div><div><h3>Configuración de generación</h3><p>Elige tipos de incidente, fuentes XFS/IoT/SNMP y opciones de reproducibilidad.</p></div></div>
+          <label class="field-label" for="scenarioName">NOMBRE DEL ESCENARIO</label>
+          <input class="text-field" id="scenarioName" name="name" maxlength="80" value="Dispositivos · Semilla 2609" required>
+          <div class="field-row">
+            <div class="field-block"><label class="field-label" for="ticketCount">NÚMERO DE CASOS</label><select class="text-field" id="ticketCount" name="ticket_count"><option value="30">30 casos</option><option value="60" selected>60 casos</option><option value="90">90 casos</option><option value="120">120 casos</option><option value="240">240 casos</option></select></div>
+            <div class="field-block"><label class="field-label" for="seed">SEMILLA ALEATORIA</label><div class="seed-input"><input class="text-field" id="seed" name="seed" type="number" min="0" max="2147483647" value="2609" required><button class="seed-refresh" id="randomSeed" type="button" title="Generar otra semilla">↻</button></div></div>
+          </div>
+          <div class="field-label group-label">CATEGORÍAS DE INCIDENTE <span class="group-hint">Elige una o varias</span></div>
+          <div class="category-grid">
+            <label class="choice-card"><input type="checkbox" name="categories" value="hardware" checked><span class="choice-check"></span><span class="choice-glyph coral">⌁</span><span class="choice-copy"><b>Hardware</b><small>ATM, refrigeración, caldera, UPS</small></span></label>
+            <label class="choice-card"><input type="checkbox" name="categories" value="network" checked><span class="choice-check"></span><span class="choice-glyph blue">↗</span><span class="choice-copy"><b>Red</b><small>Router, conectividad, SNMP</small></span></label>
+            <label class="choice-card"><input type="checkbox" name="categories" value="software" checked><span class="choice-check"></span><span class="choice-glyph violet">⌘</span><span class="choice-copy"><b>Calidad de eventos</b><small>Eventos XFS duplicados</small></span></label>
+            <label class="choice-card"><input type="checkbox" name="categories" value="fraud" checked><span class="choice-check"></span><span class="choice-glyph rose">◉</span><span class="choice-copy"><b>CashOut</b><small>Velocidad de dispensación XFS</small></span></label>
+          </div>
+          <div class="field-label group-label source-label">FUENTES DE SEÑALES <span class="group-hint">Incluye telemetría de</span></div>
+          <div class="source-list">
+            <label><input type="checkbox" name="subsystems" value="XFS" checked><span class="fake-check"></span><b>ATM · XFS</b><small>Dispensador, depositador y reciclador</small></label>
+            <label><input type="checkbox" name="subsystems" value="IOT" checked><span class="fake-check"></span><b>IoT</b><small>Refrigerador y caldera</small></label>
+            <label><input type="checkbox" name="subsystems" value="SNMP" checked><span class="fake-check"></span><b>SNMP</b><small>Router, UPS y red</small></label>
+          </div>
+          <div class="form-footer"><div class="form-note"><span>ⓘ</span> Las divisiones se asignan antes de generar los casos.</div><button class="primary-button" id="generateButton" type="submit"><span>✳</span> Generar escenario <span class="button-arrow">→</span></button></div>
+          <div class="form-message" id="formMessage" role="status"></div>
+        </form>
+
+        <aside class="blueprint-column">
+          <article class="blueprint-card">
+            <div class="blueprint-top"><div><span class="section-kicker">FLUJO DE DATOS</span><h3>Un escenario, tres divisiones</h3></div><span class="blueprint-badge">PRUEBA BLOQUEADA</span></div>
+            <div class="split-visual"><div class="split-row"><div class="split-name"><span class="split-dot train"></span><b>Entrenamiento</b><small>Lecciones e iteración</small></div><div class="split-meter"><i class="meter-train"></i></div><strong id="trainPreview">30</strong></div><div class="split-row"><div class="split-name"><span class="split-dot validation"></span><b>Validación</b><small>Aceptar cambios</small></div><div class="split-meter"><i class="meter-validation"></i></div><strong id="validationPreview">15</strong></div><div class="split-row"><div class="split-name"><span class="split-dot test"></span><b>Prueba</b><small>Solo evaluación final</small></div><div class="split-meter"><i class="meter-test"></i></div><strong id="testPreview">15</strong></div></div>
+            <div class="split-foot"><span>✓</span> El conjunto de prueba no se usa durante el aprendizaje.</div>
+          </article>
+          <article class="signal-card"><div class="signal-card-title"><div class="signal-icon">⌁</div><div><h3>Señales relacionadas</h3><p>Cada caso reúne el incidente y su telemetría de apoyo.</p></div></div><div class="signal-timeline"><div class="timeline-line"></div><div class="signal-event"><span class="timeline-dot warn"></span><div><b>Evento de dispositivo</b><small>XFS, sensores IoT o telemetría SNMP</small></div><code>WARN</code></div><div class="signal-event"><span class="timeline-dot fail"></span><div><b>Firma de falla</b><small>Código del subsistema</small></div><code>ERROR</code></div><div class="signal-event"><span class="timeline-dot info"></span><div><b>Incidente abierto</b><small>Ticket y resultado esperado</small></div><code>CASE</code></div></div><div class="signal-card-foot"><span class="mini-shield">◇</span> Las etiquetas de referencia se reservan para evaluación.</div></article>
+        </aside>
+      </section>
+
+      <section class="scenario-section" id="scenarios"><div class="section-title"><div><span class="section-kicker">02 / REVISAR</span><h2>Escenarios recientes</h2></div><span class="section-caption">Generados y guardados en PostgreSQL</span></div><div class="table-card"><div class="table-toolbar"><div class="table-heading"><h3>Biblioteca de escenarios</h3><span class="table-count" id="scenarioCount">0</span></div><div class="table-meta"><span class="mini-db-dot"></span> esquema simulator</div></div><div class="table-scroll"><table><thead><tr><th>ESCENARIO</th><th>CASOS</th><th>ENTRENAMIENTO</th><th>VALIDACIÓN</th><th>PRUEBA</th><th>SEMILLA</th><th>ESTADO</th><th></th></tr></thead><tbody id="scenarioRows"><tr><td class="empty-cell" colspan="8">Conecta PostgreSQL para ver o crear escenarios.</td></tr></tbody></table></div></div></section>
+
+      <section class="case-section hidden" id="caseSection"><div class="section-title"><div><span class="section-kicker">03 / INSPECCIONAR</span><h2 id="caseHeading">Casos del escenario</h2></div><div class="case-filters"><label class="filter-label" for="splitFilter">DIVISIÓN</label><select id="splitFilter" class="filter-select"><option value="all">Todas</option><option value="train">Entrenamiento</option><option value="validation">Validación</option><option value="test">Prueba</option></select></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>TICKET</th><th>DISPOSITIVO / UBICACIÓN</th><th>CATEGORÍA</th><th>SEVERIDAD</th><th>DIVISIÓN</th><th>CAUSA RAÍZ ESPERADA</th></tr></thead><tbody id="caseRows"></tbody></table></div></div></section>
+      <footer class="page-footer"><span>SignalLoop Simulator <b>·</b> laboratorio local de datos sintéticos</span><span>Preparado para evaluar agentes de forma repetible</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
