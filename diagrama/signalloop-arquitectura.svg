@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 800" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#374151"/></marker>
+<marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9CA3AF"/></marker></defs>
+<rect width="1440" height="800" fill="#F9FAFB"/>
+<path d="M700 60 C900 20 1100 110 1440 50" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+<path d="M700 66 C900 28 1100 106 1440 57" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+<path d="M700 72 C900 36 1100 102 1440 64" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+<path d="M700 78 C900 44 1100 98 1440 71" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+<path d="M700 84 C900 52 1100 94 1440 78" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+<path d="M700 90 C900 60 1100 90 1440 85" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+<g transform="translate(60 40) scale(0.2)"><g fill="none" stroke="#000000" stroke-linecap="round"><path d="M186.1 142.9 C167.3 160.4 147.2 200.0 130.6 214.0 A60 60 0 1 1 130.6 122.0 C155.1 142.6 186.9 66.6 211.4 46.0 A60 60 0 1 1 227.5 147.6" stroke-width="30"/><g stroke-width="11"><line x1="70" y1="190" x2="70" y2="168"/><line x1="92" y1="190" x2="92" y2="158"/><line x1="114" y1="190" x2="114" y2="148"/><line x1="228" y1="112" x2="228" y2="88"/><line x1="250" y1="112" x2="250" y2="78"/><line x1="272" y1="112" x2="272" y2="68"/></g></g></g>
+<rect x="138" y="42" width="2" height="48" fill="#000"/>
+<text x="156" y="72" font-size="30" font-weight="700" letter-spacing="-0.8" fill="#000">SignalLoop</text>
+<text x="157" y="92" font-size="14" font-weight="500" fill="#374151">Arquitectura de monitoreo multifuente</text>
+<text x="60" y="150" font-size="11" font-weight="600" letter-spacing="1.6" fill="#9CA3AF">FUENTES</text>
+<text x="500" y="150" font-size="11" font-weight="600" letter-spacing="1.6" fill="#9CA3AF">PROCESAMIENTO</text>
+<text x="990" y="150" font-size="11" font-weight="600" letter-spacing="1.6" fill="#9CA3AF">OPERACIÓN</text>
+<rect x="60" y="170" width="320" height="92" rx="14" fill="#fff" stroke="#E5E7EB"/>
+<rect x="78" y="192" width="48" height="48" rx="12" fill="#F3F4F6"/>
+<g transform="translate(90 204) scale(1)"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg></g>
+<text x="144" y="200" font-size="10.5" font-weight="600" letter-spacing="0.6" fill="#9CA3AF">IoT / MQTT</text>
+<text x="144" y="222" font-size="16" font-weight="600" fill="#000">Edificios</text>
+<text x="144" y="242" font-size="12.5" fill="#374151">Temperatura, energía y accesos</text>
+<rect x="60" y="290" width="320" height="92" rx="14" fill="#fff" stroke="#E5E7EB"/>
+<rect x="78" y="312" width="48" height="48" rx="12" fill="#F3F4F6"/>
+<g transform="translate(90 324) scale(1)"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></g>
+<text x="144" y="320" font-size="10.5" font-weight="600" letter-spacing="0.6" fill="#9CA3AF">IoT / GPS</text>
+<text x="144" y="342" font-size="16" font-weight="600" fill="#000">Flotilla de camiones</text>
+<text x="144" y="362" font-size="12.5" fill="#374151">Ubicación y telemetría</text>
+<rect x="60" y="410" width="320" height="92" rx="14" fill="#fff" stroke="#E5E7EB"/>
+<rect x="78" y="432" width="48" height="48" rx="12" fill="#F3F4F6"/>
+<g transform="translate(90 444) scale(1)"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/></svg></g>
+<text x="144" y="440" font-size="10.5" font-weight="600" letter-spacing="0.6" fill="#9CA3AF">SNMP</text>
+<text x="144" y="462" font-size="16" font-weight="600" fill="#000">Enterprise Network</text>
+<text x="144" y="482" font-size="12.5" fill="#374151">Interfaces, enlaces y latencia</text>
+<rect x="60" y="530" width="320" height="92" rx="14" fill="#fff" stroke="#E5E7EB"/>
+<rect x="78" y="552" width="48" height="48" rx="12" fill="#F3F4F6"/>
+<g transform="translate(90 564) scale(1)"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><rect x="7" y="5" width="10" height="5" rx="1"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg></g>
+<text x="144" y="560" font-size="10.5" font-weight="600" letter-spacing="0.6" fill="#9CA3AF">XFS</text>
+<text x="144" y="582" font-size="16" font-weight="600" fill="#000">ATM</text>
+<text x="144" y="602" font-size="12.5" fill="#374151">Dispensador, cash out y alertas</text>
+<path d="M380 216.0 H440 V260 H498" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M380 336.0 H440 V340 H498" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M380 456.0 H440 V420 H498" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M380 576.0 H440 V500 H498" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="500" y="190" width="400" height="400" rx="20" fill="#000"/>
+<text x="528" y="234" font-size="22" font-weight="700" fill="#fff">Central</text>
+<text x="528" y="256" font-size="12.5" fill="#9CA3AF">SignalLoop · Intérprete</text>
+<rect x="528" y="280" width="344" height="46" rx="10" fill="#111827" stroke="#374151"/>
+<text x="548" y="308" font-size="11" font-weight="600" fill="#9CA3AF">01</text>
+<text x="576" y="309" font-size="14" font-weight="500" fill="#F9FAFB">Ingesta y normalización</text>
+<path d="M700.0 326 V342" stroke="#374151" stroke-width="1.5"/>
+<rect x="528" y="342" width="344" height="46" rx="10" fill="#111827" stroke="#374151"/>
+<text x="548" y="370" font-size="11" font-weight="600" fill="#9CA3AF">02</text>
+<text x="576" y="371" font-size="14" font-weight="500" fill="#F9FAFB">Detección y correlación</text>
+<path d="M700.0 388 V404" stroke="#374151" stroke-width="1.5"/>
+<rect x="528" y="404" width="344" height="46" rx="10" fill="#111827" stroke="#374151"/>
+<text x="548" y="432" font-size="11" font-weight="600" fill="#9CA3AF">03</text>
+<text x="576" y="433" font-size="14" font-weight="500" fill="#F9FAFB">Investigación con agentes</text>
+<path d="M700.0 450 V466" stroke="#374151" stroke-width="1.5"/>
+<rect x="528" y="466" width="344" height="46" rx="10" fill="#111827" stroke="#374151"/>
+<text x="548" y="494" font-size="11" font-weight="600" fill="#9CA3AF">04</text>
+<text x="576" y="495" font-size="14" font-weight="500" fill="#F9FAFB">Aprendizaje y validación</text>
+<path d="M700.0 512 v14 H514 V303 H526" fill="none" stroke="#9CA3AF" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#aw)"/>
+<text x="700.0" y="580" font-size="11.5" text-anchor="middle" fill="#9CA3AF">Reglas versionadas v0 → v1 → v2</text>
+<rect x="990" y="330" width="170" height="120" rx="14" fill="#fff" stroke="#E5E7EB"/>
+<rect x="1008" y="348" width="40" height="40" rx="10" fill="#F3F4F6"/>
+<g transform="translate(1016 356)"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg></g>
+<text x="1008" y="416" font-size="16" font-weight="600" fill="#000">HD</text>
+<text x="1008" y="436" font-size="12" fill="#374151">Help desk · tickets</text>
+<rect x="1220" y="330" width="170" height="120" rx="14" fill="#fff" stroke="#E5E7EB"/>
+<rect x="1238" y="348" width="40" height="40" rx="10" fill="#F3F4F6"/>
+<g transform="translate(1246 356)"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></g>
+<text x="1238" y="416" font-size="16" font-weight="600" fill="#000">Proveedores</text>
+<text x="1238" y="436" font-size="12" fill="#374151">Atención en campo</text>
+<path d="M900 390.0 H988" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="945.0" y="380.0" font-size="11" text-anchor="middle" fill="#374151">Alertas</text>
+<path d="M1160 390.0 H1218" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="1190.0" y="380.0" font-size="11" text-anchor="middle" fill="#374151">Órdenes</text>
+<path d="M1305.0 450 V640 H700.0 V592" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#aw)"/>
+<path d="M1075.0 450 V640" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5"/>
+<text x="1042.5" y="660" font-size="11.5" text-anchor="middle" fill="#374151">Retroalimentación: cierre de tickets y visitas alimentan el aprendizaje</text>
+<line x1="60" y1="706" x2="1380" y2="706" stroke="#E5E7EB"/>
+<text x="60" y="730" font-size="13" font-weight="600" fill="#000">Datos</text>
+<text x="60" y="748" font-size="11.5" fill="#9CA3AF">Multifuente</text>
+<path d="M335 734 h30" stroke="#9CA3AF" stroke-width="1.2" marker-end="url(#aw)"/>
+<text x="395" y="730" font-size="13" font-weight="600" fill="#000">Transformación</text>
+<text x="395" y="748" font-size="11.5" fill="#9CA3AF">Enriquecimiento y normalización</text>
+<path d="M670 734 h30" stroke="#9CA3AF" stroke-width="1.2" marker-end="url(#aw)"/>
+<text x="730" y="730" font-size="13" font-weight="600" fill="#000">Eventos y Alertas</text>
+<text x="730" y="748" font-size="11.5" fill="#9CA3AF">Detección en tiempo real</text>
+<path d="M1005 734 h30" stroke="#9CA3AF" stroke-width="1.2" marker-end="url(#aw)"/>
+<text x="1065" y="730" font-size="13" font-weight="600" fill="#000">Inteligencia y Visibilidad</text>
+<text x="1065" y="748" font-size="11.5" fill="#9CA3AF">Operación y análisis</text>
+</svg>

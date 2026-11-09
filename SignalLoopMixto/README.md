@@ -1,11 +1,17 @@
 # SignalLoop · Aprendiz (modo Mixto)
 
-Solo el **Aprendiz** está en Python. El **intérprete** puede estar en el lenguaje que el equipo ya usa: se conectan por dos archivos.
+Este prototipo Python documenta el comportamiento del ciclo de aprendizaje y del motor de reglas. Se conserva como **referencia funcional y oráculo de paridad** mientras el producto se construye en Java dentro de `central/`; no es un servicio que se vaya a integrar o desplegar con Central.
 
 - El intérprete escribe `resultados/corridas.jsonl`: una línea por caso del banco en cada lote.
 - El Aprendiz escribe el JSON de la lección en `lecciones/candidatas/` y, si la compuerta la acepta, en `lecciones/activas/`.
 
 El contrato completo, con la semántica de cada regla, está en **[CONTRATO.md](CONTRATO.md)**. Dáselo a quien implemente el intérprete.
+
+## Uso como referencia funcional
+
+Este proyecto es referencia del comportamiento y oráculo temporal de pruebas para el intérprete Java de [`../central/`](../central/). No es el destino de nuevas funcionalidades ni un componente runtime que se vaya a desplegar con Central. La propuesta de snapshots V0/V1/V2 dentro del codebase destino está en [`../docs/spec/SPEC-0003-versioned-interpreter.md`](../docs/spec/SPEC-0003-versioned-interpreter.md).
+
+Hoy el estado local de este proyecto se registra en `lecciones/versiones.json` y sus reglas activas viven en `lecciones/activas/`. Esa estructura describe el prototipo de referencia, no la estructura del producto Central.
 
 ## Instalar
 
