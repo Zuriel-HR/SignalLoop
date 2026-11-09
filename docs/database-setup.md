@@ -14,7 +14,8 @@ tags: [database, postgresql, migrations, operations]
 
 # Configuración y operación del esquema PostgreSQL de SignalLoop
 
-## 1. Propósito
+- `project`: agent systems, immutable generations, datasets, evaluation runs and per-case results, evidence-backed lessons, change decisions, mutation statistics, playbooks, and transfer experiments.
+- `simulator`: synthetic scenarios, ATMs and generic device assets, tickets, XFS/IoT/SNMP error catalog, runbooks, logs, ATM transactions, expected outcomes, and frozen dataset exports.
 
 Documentar los requisitos, aplicación, verificación y estructura de la migración inicial `db/migrations/V001__initial_schemas.sql`. El SQL versionado sigue siendo la estructura. La Central lo aplica con Flyway al arrancar, como se resume en la sección 7.10.
 
@@ -86,7 +87,7 @@ psql -d signalloop -c '\dt project.*'
 psql -d signalloop -c '\dt simulator.*'
 ```
 
-Resultado esperado para V001: esquemas `project` y `simulator`, 15 tablas en `project` y 9 en `simulator` (24 en total). El script también crea 12 índices secundarios además de los índices implícitos de claves primarias y restricciones únicas. La consulta a continuación permite verificar las tablas de usuario:
+Migration `V001` creates 15 project tables and 9 simulator tables. `V002` extends simulator logs and assets for IoT and SNMP sources. Apply new migrations in order. Do not commit PostgreSQL dumps, `.env` files, passwords, or real customer data.
 
 ```sql
 SELECT table_schema, count(*) AS table_count
