@@ -2,12 +2,12 @@
 id: SPEC-0003
 title: Intérprete versionado en Central con paridad de referencia
 status: Draft
-version: 0.2.0
+version: 0.3.0
 owner: SignalLoop Intelligence
 created: 2026-11-09
 updated: 2026-11-09
 reviewers: []
-depends_on: [RFC-0001, ARC-0001, SPEC-0002, DB-MIGRATION-001, CTX-02]
+depends_on: [RFC-0001, ARC-0001, SPEC-0002, DB-MIGRATION-001, context/02_ciclo_de_aprendizaje_y_evaluacion.md]
 supersedes: []
 tags: [specification, interpreter, rules, versioning, central]
 ---
@@ -16,17 +16,17 @@ tags: [specification, interpreter, rules, versioning, central]
 
 ## 1. Propósito
 
-Definir el primer corte del intérprete de clasificación que se construirá dentro del codebase Java de `central/`, usando `SignalLoopMixto/` solo como referencia funcional y oráculo temporal de paridad. También propone una estructura inequívoca para V0, V1 y V2 dentro del codebase destino.
+Definir el primer corte del intérprete de clasificación dentro de `central/`, usando `SignalLoopMixto/` solo como referencia funcional y oráculo temporal de paridad. También fija la progresión local V0–V3 para el banco de seis casos del master prompt.
 
-Este documento está en Draft. El motor Python actual sirve de referencia ejecutable para el DSL de lecciones; no se considera todavía el intérprete real requerido por la demo.
+Este documento está en Draft. Central ya tiene un primer corte determinista de agentes runtime y un banco fijo de seis casos; todavía requiere revisión funcional antes de declararse como implementación final del SPEC.
 
 ## 2. Antecedentes
 
-`central/` usa Quarkus 3.38.3, Java 21, PostgreSQL y Flyway. Ya persiste escenarios, ATM, tickets, logs y outcomes. `GET /api/v1/atms/{id}/logs` devuelve la secuencia temporal sin outcomes.
+`central/` usa Quarkus 3.38.3, Java 21, PostgreSQL y Flyway. Persiste escenarios, ATM, tickets, logs y outcomes. El endpoint `POST /api/v1/scenarios/{id}/learning-cycle?source=XFS|IOT|SNMP` ejecuta el primer ciclo determinista y persiste evaluaciones, resultados, lecciones, decisiones y generaciones.
 
 `SignalLoopMixto/` contiene lógica útil como referencia: el motor en `aprendiz/motor.py`, el ciclo de aprendizaje y los contratos de casos, corridas y lecciones. Ese directorio **no es destino de desarrollo ni componente runtime**. La lógica aceptada se portará y evolucionará en Java dentro de `central/`; el código Python servirá temporalmente como oráculo independiente durante las pruebas de paridad. La evidencia de producto/demo debe salir de Central.
 
-V001 tiene entidades para sistemas, generaciones, datasets, evaluación, resultados, lecciones y decisiones, pero Central aún no ofrece API para gestionarlas. La secuencia XFS descrita por SPEC-0002 es señal persistida; no es aún clasificación ni aprendizaje.
+V001 tiene entidades para sistemas, generaciones, datasets, evaluación, resultados, lecciones y decisiones; el endpoint de ciclo ya las usa para el banco de seis casos. La ruta normal de señales XFS descrita por SPEC-0002 sigue separada de este banco de aprendizaje.
 
 ## 3. Problema
 
@@ -39,12 +39,12 @@ Sin un contrato de ejecución versionada, el intérprete podría leer reglas mut
 - Adaptar el flujo de evaluación/candidata de referencia al codebase Central, sin conservar Python como dependencia runtime.
 - Precisar el orden de corrida normal, candidata, promoción, ablación y held-out.
 - Definir casos iniciales de prueba basados en C1–C6 y R1–R2.
-- Especificar responsabilidades de Central, intérprete y futuro flujo de aprendizaje implementado dentro del destino Central.
+- Especificar responsabilidades y límites del flujo runtime implementado dentro de Central.
 
 ## 5. No objetivos
 
 - No habilita a un LLM para modificar o desplegar código Java/Python.
-- No da por implementados endpoints de corridas, reglas, generaciones o evaluaciones en Central.
+- No implica que el primer endpoint de ciclo cubra todavía Help Desk, feedback humano, ablación o un conjunto held-out.
 - No reemplaza el esquema SQL V001 ni convierte outcomes en entrada del clasificador.
 - No exige que todo el ciclo permanezca en archivos a largo plazo; el contrato puede migrar a API/BD después de aceptar una nueva SPEC.
 - No decide proveedor/modelo de IA ni plataforma cloud.
@@ -59,6 +59,9 @@ Sin un contrato de ejecución versionada, el intérprete podría leer reglas mut
 - **Prueba de candidata:** lote de banco ejecutado con un snapshot base y una lección candidata adicional; no cambia por sí mismo la versión actual.
 - **Reservado/held-out:** caso no usado para proponer o aceptar lecciones; se reporta por separado.
 - **Outcome esperado:** verdad de referencia consumida solo por el evaluador y la compuerta, nunca por la función que clasifica.
+- **Aprendiz runtime:** flujo que correlaciona resultados fallidos y feedback del Help Desk para proponer una lección con evidencia.
+- **Compuerta runtime:** evaluador determinista que acepta una candidata solo si cumple el criterio de mejora y no regresión acordado.
+- **Constructor runtime:** componente que crea un snapshot sucesor inmutable a partir del snapshot padre y las lecciones aceptadas; genera pruebas para el sucesor y no puede modificar el banco ni la compuerta.
 
 ## 7. Propuesta / Diseño
 
@@ -81,19 +84,55 @@ flowchart LR
   R --> Q
 ```
 
-El diagrama distingue el estado implementado del objetivo: hoy Central persiste señal y outcome por rutas separadas; aún no hay intérprete ni ciclo de aprendizaje. `SignalLoopMixto` se usa solo para pruebas de paridad, no se despliega ni se importa como dependencia de Central.
+El diagrama distingue el primer corte del objetivo completo: Central ya tiene intérprete determinista y ciclo persistente para el banco de seis casos; Help Desk y feedback humano aún no están integrados. `SignalLoopMixto` se usa solo como referencia, no se despliega ni se importa como dependencia de Central.
 
-**Central (Java/Quarkus):** producto y único destino de implementación; persiste escenarios, ATM, tickets y logs; entrega al intérprete una entrada sin outcome y, en fases posteriores, aloja corridas, generaciones, lecciones y evaluación.
+El ciclo runtime mínimo del master prompt se representa así:
 
-**Intérprete (destino: Java en `central/`):** consume caso/secuencia y snapshot explícitos; porta la semántica validada de las reglas de referencia; devuelve clasificación y resultado por caso con versión, candidata/ablación y trazabilidad. Nunca lee `expected_outcomes` durante clasificación.
+```mermaid
+flowchart LR
+  S[Simulador: XFS / IoT / SNMP] --> I[Central: ingesta y persistencia]
+  I --> V[Intérprete vN]
+  V --> H[Help Desk: tickets y feedback]
+  V --> E[Evaluación: banco fijo]
+  H --> E
+  E --> L[Aprendiz: propuesta con evidencia]
+  L --> G{Compuerta determinista}
+  G -->|rechazada: evidencia y otro intento| L
+  G -->|aceptada| A[Lecciones activas versionadas]
+  A --> B[Constructor: snapshot sucesor + pruebas]
+  B --> N[Intérprete vN+1]
+  O[expected_outcomes] -->|solo etiquetas| E
+```
 
-**Flujo de aprendizaje/runtime (implementación destino en `central/`):** el futuro componente leerá resultados, propondrá lecciones y ejecutará candidatas contra el intérprete Java. Solo podrá crear una generación sucesora tras cumplir esquema, evidencia, mejora y no regresión. `SignalLoopMixto/aprendiz/` es referencia de comportamiento, no se ejecuta como dependencia del producto.
+Responsabilidades y límites:
 
-**Evaluador:** compara resultado con etiqueta, calcula señales/métricas y aplica la compuerta fuera de la función de clasificación. El destino productivo es Central/Java. El evaluador Python puede usarse temporalmente como referencia de pruebas, no como runtime ni parte del despliegue.
+- **Simulador/ingesta:** produce eventos sintéticos con contrato común para XFS, IoT y SNMP; conserva el origen y el payload fuente.
+- **Intérprete vN:** aplica reglas deterministas del snapshot activo, clasifica y administra el ciclo de ticket. No lee outcomes esperados.
+- **Help Desk:** conserva apertura, cierre, reconocimiento y feedback del equipo; aporta evidencia al Aprendiz.
+- **Evaluación/banco:** calcula resultados por caso a partir de la salida y los outcomes. El conjunto reservado no se usa para proponer ni aceptar cambios.
+- **Aprendiz:** analiza fallas y feedback; produce una propuesta declarativa con condición, acción, evidencia y casos que podrían refutarla. No edita el banco, las reglas activas ni la compuerta.
+- **Compuerta:** ejecuta una candidata contra el conjunto de validación acordado, bloquea regresiones y registra aceptación/rechazo. No depende de que el Aprendiz se autoevalúe.
+- **Constructor:** materializa un sucesor solo desde una candidata aceptada, hereda lecciones activas y registra padre, configuración y hash. Emite pruebas del sucesor; no genera ni ejecuta código arbitrario.
+
+El target de transferencia del master prompt es V0/XFS → V1/IoT → V2/SNMP. La primera demo propone L1 (duplicación), L2 (silencio de heartbeat) y L3 (alarma intermitente/recuperación). Los valores de referencia 2/6, 4/6 y 6/6 son objetivos que deben salir de corridas reproducibles del banco congelado, no resultados que se puedan declarar por configuración.
+
+**Compatibilidad con la referencia disponible:** `SignalLoopMixto/README.md` describe otro benchmark: cuatro lecciones sobre C1–C6 y R1/R2. El corte local de esta demo tiene seis tickets (dos por fuente) y tres lecciones exactas: duplicación XFS, silencio IoT e intermitencia SNMP. No mezclar sus métricas ni sus casos.
+
+**Relación con `docs/agents/`:** AG-01 apoya el contrato de ingesta; AG-02 aporta investigación basada en evidencia; AG-03 redacta candidatas para el Aprendiz; AG-04 audita el protocolo y sus artefactos. Son perfiles documentales, no los componentes runtime del diagrama. La Compuerta y el Evaluador siguen siendo deterministas. El Constructor es un componente runtime separado, no una facultad adicional de AG-03.
+
+**Central (Java/Quarkus):** producto y único destino de implementación; persiste escenarios, ATM/assets, tickets y logs; el nuevo ciclo también persiste corridas, generaciones, lecciones, evidencia y evaluación.
+
+**Intérprete (Java en `central/`):** consume señales y snapshot explícitos; devuelve categoría, severidad, acción y referencias de evidencia. Nunca recibe `expected_outcomes` durante clasificación. El primer corte usa reglas exactas y un baseline XFS amplio; no es todavía paridad con el motor de Mixto.
+
+**Flujo de aprendizaje/runtime (Java en `central/`):** el Aprendiz propone desde ejemplos de train; el Evaluador compara categorías; la Compuerta valida sobre el mismo split de validation antes/después y exige mejora sin regresiones; el Constructor crea un snapshot con hash al aceptar. La regla es declarativa. `SignalLoopMixto/aprendiz/` no se ejecuta como dependencia del producto.
+
+**Evaluador:** compara categoría con etiqueta fuera de la función de clasificación. La compuerta actual es una regla inicial de demo: al menos una mejora y cero regresiones en validation; con tres casos no pretende significancia estadística. El evaluador Python puede usarse como referencia, no como runtime.
 
 ### 7.2 Estructura versionada propuesta
 
-El código y los fixtures de versiones viven en Central. El baseline V0 se incluye como recurso versionado; V1/V2 de producción se materializan como generaciones inmutables en `project.generations.config`/`config_hash`. Si una versión promovida se congela para revisión o demo, se exporta también a su carpeta de snapshot bajo `central/interpreter-versions/`. PostgreSQL conserva la versión activa y su historial como fuente de verdad del runtime. Esto permite probar versiones en carpetas y, a la vez, que el aprendizaje runtime no requiera editar/reconstruir el JAR para crear una generación.
+El primer corte guarda V0 y las generaciones aceptadas directamente en `project.generations.config`/`config_hash`. La exportación a archivos versionados bajo `central/interpreter-versions/` sigue pendiente. PostgreSQL conserva la versión activa y su historial como fuente de verdad del runtime.
+
+**Ejecución local registrada el 2026-11-09:** el banco `master-prompt-learning-bank` produjo tres decisiones aceptadas (XFS, IoT y SNMP), cero regresiones, tres lecciones aceptadas y generaciones V0–V3 con 0, 1, 2 y 3 reglas. En validation, la exactitud observada pasó 0/3 → 1/3 → 2/3 → 3/3. Se guardaron nueve corridas y 21 resultados por caso. Es la métrica del corte local; no debe presentarse como 2/6 → 4/6 → 6/6 del diagrama sin alinear el baseline y su denominador.
 
 ```text
 central/
@@ -126,7 +165,7 @@ Reglas de versionado:
 7. Rechazo/retirada produce evidencia y una nueva versión derivada, si cambia la lógica activa; no borra historia ni edita snapshots anteriores.
 8. Cada corrida guarda `config_hash`/hash del snapshot además de `version`, para identificar la lógica exacta usada y detectar cambios en una exportación.
 
-**Estado respecto al código actual:** la lógica del intérprete, baseline de versión y carpetas exportadas todavía no existen en Central. `SignalLoopMixto/lecciones/activas/` y `versiones.json` son artefactos de referencia, no ubicación ni fuente de verdad del producto.
+**Estado respecto al código actual:** V0 y sucesores se guardan en `project.generations` con `config_hash`; la última generación aceptada es el snapshot activo. La exportación a carpetas JSON versionadas aún no está implementada. `SignalLoopMixto/lecciones/activas/` y `versiones.json` son solo referencias.
 
 ### 7.3 Contrato de corrida
 
@@ -143,19 +182,20 @@ El contrato actual define `pasa` por igualdad de conteos de tickets; antes de ad
 
 ### 7.4 Transición desde la señal XFS de Central
 
-El adaptador destino en Central puede convertir la secuencia de `simulator.logs` ordenada por `(occurred_at, id)` a la entrada del intérprete sin duplicar producción de datos. La secuencia `DISP_WARN_LOW`, `DISP_JAM_WARN`, `DISP_JAM` es un patrón prefalla; por sí sola no especifica la clasificación de los casos C1–C6. Debe asociar el ticket como referencia, nunca convertir `expected_outcome` en evento.
+El ciclo actual lee `simulator.logs` ordenado por `(occurred_at, id)` y asocia el ticket como referencia. No convierte `expected_outcome` en evento. La secuencia `DISP_WARN_LOW`, `DISP_JAM_WARN`, `DISP_JAM` sigue siendo un patrón prefalla separado; aún no está mapeada con los casos C1–C6.
 
-Antes de implementar, definir cómo un caso de prueba representa el agregado V001. El primer corte acepta fixtures JSON bajo `central/src/test/resources/`; los casos existentes de SignalLoopMixto pueden servir temporalmente como fixtures de paridad.
+El primer corte usa directamente los seis tickets del banco fijo en `simulator` y guarda la entrada observada serializada en `project.case_results`. El banco C1–C6/R1–R2 de Mixto sigue siendo referencia separada, no fixture activo para este ciclo.
 
 ### 7.5 Definición funcional V0/V1/V2
 
 | Versión | Contenido | Creación | Invariante de comparación |
 |---|---|---|---|
-| V0 | Reglas base portadas a Java, sin lecciones aprendidas | Equipo | Snapshot fijo de referencia en Central |
-| V1 | V0 + primera candidata aceptada, por ejemplo cierre CashOut con `REPLENISH` | Compuerta futura del flujo Central | Mismo banco; reservados solo se reportan |
-| V2 | V1 + siguiente candidata aceptada según evidencia | Nueva compuerta del flujo Central | Mismos conjuntos; held-out separado |
+| V0 | Baseline XFS amplio, sin reglas aprendidas | Primer ciclo del sistema | Snapshot guardado en PostgreSQL |
+| V1 | V0 + regla de evento XFS duplicado | Compuerta runtime | Validation idéntico antes y después |
+| V2 | V1 + regla de heartbeat IoT ausente | Compuerta runtime | Validation idéntico antes y después |
+| V3 | V2 + regla de alarma SNMP intermitente | Compuerta runtime | Validation idéntico antes y después |
 
-Los ejemplos ilustran las lecciones listadas en el README/CONTRATO actual, no fijan cuál será V1/V2 final. La numeración se asigna al snapshot sucesor aceptado; no depende de la cantidad de candidatas fallidas.
+La numeración se asigna al snapshot sucesor aceptado y aumenta después de un rechazo sin reutilizar el número de generación. Las tres lecciones del banco local corresponden a duplicación XFS, silencio IoT e intermitencia SNMP.
 
 ### 7.6 Matriz mínima de pruebas
 
@@ -236,4 +276,5 @@ Las cifras de referencia provienen de SignalLoopMixto y se reproducen con su mot
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 0.3.0 | 2026-11-09 | Registra el primer ciclo runtime Java, endpoint de aprendizaje, banco fijo XFS/IoT/SNMP y resultados locales persistidos en PostgreSQL. |
 | 0.2.0 | 2026-11-09 | Aclara Central como único destino, distingue baseline/exportaciones en carpetas de generaciones runtime persistidas en PostgreSQL y restringe Mixto al rol de oráculo. |

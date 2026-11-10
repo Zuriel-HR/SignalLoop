@@ -7,7 +7,7 @@ owner: SignalLoop Intelligence
 created: 2026-11-09
 updated: 2026-11-09
 reviewers: []
-depends_on: [AGENT-TEMPLATE-ADI, RFC-0001, ARC-0001, CTX-02]
+depends_on: [AGENT-TEMPLATE-ADI, RFC-0001, ARC-0001, context/02_ciclo_de_aprendizaje_y_evaluacion.md]
 supersedes: []
 tags: [agent, rules, learning]
 ---
@@ -24,6 +24,8 @@ tags: [agent, rules, learning]
 ## 2. Mission
 
 Translate a reviewed failure signal and investigator evidence into a candidate lesson and a declarative rule expressed only in the accepted rule schema. Include positive, negative and boundary cases that can falsify the proposal.
+
+This development profile supports the runtime Aprendiz's proposal function. It does not implement the runtime Constructor or promote a candidate into an active successor snapshot.
 
 ## 3. Authority
 
@@ -42,7 +44,7 @@ This agent may not:
 
 ## 4. Required Context
 
-1. Augura documents and order in `AGENT-TEMPLATE-ADI.md`.
+1. `docs/agents/README.md` and `docs/agents/AGENT-TEMPLATE-ADI.md`.
 2. Accepted rule and lesson specifications (currently proposed examples in `context/01` and `context/02`).
 3. Investigator report from AG-02 and exact event evidence.
 4. Normal, anomalous, boundary and held-out scenario definitions.

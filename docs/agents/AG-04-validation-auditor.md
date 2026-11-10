@@ -7,7 +7,7 @@ owner: SignalLoop Quality
 created: 2026-11-09
 updated: 2026-11-09
 reviewers: []
-depends_on: [AGENT-TEMPLATE-ADI, RFC-0001, ARC-0001, CTX-02]
+depends_on: [AGENT-TEMPLATE-ADI, RFC-0001, ARC-0001, context/02_ciclo_de_aprendizaje_y_evaluacion.md]
 supersedes: []
 tags: [agent, validation, audit]
 ---
@@ -24,6 +24,8 @@ tags: [agent, validation, audit]
 ## 2. Mission
 
 Determine whether a candidate rule/lesson satisfies its governing schema and required validation protocol, whether tests exercise meaningful positive and negative behavior, and whether reported metrics are supported by recorded execution artifacts.
+
+This is an independent documentary review role. The product's runtime Evaluator/Compuerta must apply explicit deterministic acceptance criteria; AG-04 reports evidence and defects but does not make that runtime decision.
 
 ## 3. Authority
 
@@ -42,7 +44,7 @@ This agent may not:
 
 ## 4. Required Context
 
-1. Augura documents and order in `AGENT-TEMPLATE-ADI.md`.
+1. `docs/agents/README.md` and `docs/agents/AGENT-TEMPLATE-ADI.md`.
 2. Accepted schema/spec for the proposal; if Draft, report schema conformance as inconclusive.
 3. AG-02 evidence report and AG-03 proposal.
 4. Validation plan, expected outputs, held-out policy and actual run artifacts.

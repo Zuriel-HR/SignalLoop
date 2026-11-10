@@ -7,7 +7,7 @@ owner: SignalLoop Architecture
 created: 2026-11-09
 updated: 2026-11-09
 reviewers: []
-depends_on: [AKB-0001, RFC-0001, AGENT-TEMPLATE-ADI]
+depends_on: [RFC-0001, AGENT-TEMPLATE-ADI]
 supersedes: []
 tags: [agents, governance, documentation]
 ---
@@ -20,7 +20,7 @@ Indexar instrucciones `.md` para trabajadores humanos o de IA que contribuyan a 
 
 ## 2. Antecedentes
 
-La plantilla de origen es `.augura/AGENT_TEMPLATE.md`; el AKB requiere front matter común y documentos de una sola responsabilidad. Los documentos de agente de este directorio conservan identidad, misión, autoridad, contexto obligatorio, principios, contrato de salida y escalamiento de esa plantilla.
+Estas fichas son contratos documentales para quienes diseñan, implementan y revisan SignalLoop. No son agentes runtime ni configuran proveedores/modelos. El repositorio no contiene actualmente `.augura/AGENT_TEMPLATE.md`, `.augura/AKB-0001-Knowledge-Standard.md` ni `.augura/ROOT_MEMORY.md`; los perfiles deben usar los RFC, ARC, SPEC y documentos de contexto versionados que sí están presentes.
 
 ## 3. Problema
 
@@ -52,13 +52,28 @@ Define índice, orden recomendado de colaboración y estado actual de las fichas
 | AG-03 | `AG-03-rule-engineer.md` | Proponer reglas declarativas y casos de validación | Aprobar su propia regla o ejecutar código generado |
 | AG-04 | `AG-04-validation-auditor.md` | Verificar pruebas, evidencia, versionado y seguridad de propuestas | Convertir propuesta fallida en regla activa |
 
-### Secuencia recomendada
+### Relación con los componentes runtime
 
-`AG-00` recibe tarea → `AG-01` inspecciona contrato si hay eventos → procesamiento determinista del dominio → `AG-02` analiza señal si aplica → `AG-03` propone lección/regla/pruebas → `AG-04` valida evidencia y criterios → responsable humano revisa decisiones estratégicas y cualquier aprobación operativa requerida. La implementación solo comienza con especificación aceptada.
+Los perfiles de arriba ayudan al equipo a construir y revisar el sistema. El diagrama de arquitectura mínima describe componentes runtime distintos:
+
+| Componente runtime | Responsabilidad | Perfil documental que puede apoyar | Límite de autoridad |
+|---|---|---|---|
+| Simulador / contrato de eventos | Produce XFS, IoT y SNMP; la ingesta valida y persiste el evento | AG-01 | El steward propone mappings; no cambia por sí mismo el contrato aceptado |
+| Intérprete versionado | Clasifica eventos y abre/cierra tickets según el snapshot activo | AG-01 para el contrato; AG-02 para analizar fallas | El perfil documental no ejecuta ni activa reglas |
+| Evaluación / banco | Compara la salida con outcomes y conserva resultados por caso | AG-04 para auditoría | El evaluador runtime debe permanecer separado de la clasificación |
+| Aprendiz | Usa fallas y retroalimentación del Help Desk para proponer una lección con evidencia | AG-02 aporta análisis; AG-03 redacta la candidata | Ninguno de los dos activa la candidata |
+| Compuerta | Acepta una candidata solo si mejora el banco sin regresiones | AG-04 revisa la evidencia | La decisión runtime es determinista; AG-04 no sustituye la compuerta |
+| Constructor | Crea el snapshot sucesor, hereda lecciones aceptadas y adjunta pruebas | No hay perfil documental dedicado | No puede editar el banco ni la compuerta |
+
+La progresión de demo del master prompt es V0/XFS → V1/IoT → V2/SNMP, con lecciones de duplicación, silencio de heartbeat e intermitencia. La arquitectura y los datos runtime se describen en `docs/spec/SPEC-0003-versioned-interpreter.md`; las fichas AG no representan ese ciclo como cinco agentes autónomos.
+
+### Secuencia recomendada para trabajo documental
+
+`AG-00` recibe tarea → `AG-01` inspecciona contrato si hay eventos → procesamiento determinista del dominio → `AG-02` analiza señal si aplica → `AG-03` propone lección/regla/pruebas → `AG-04` revisa evidencia y criterios → responsable humano revisa decisiones estratégicas y cualquier aprobación operativa requerida. Esta secuencia organiza el trabajo del equipo; no es el pipeline runtime del diagrama.
 
 ### Cómo aplicar plantilla
 
-Cada ficha debe cumplir las secciones numeradas 1–7 de `.augura/AGENT_TEMPLATE.md` y los requisitos de front matter/secciones del AKB-0001. La sección 6 contractualmente solicita objetivo, conocimiento, acciones, archivos, pruebas, preguntas, riesgos y próximo paso. Las secciones 8–12 añaden riesgos, preguntas, referencias y changelog. Todas las fichas presentes usan esa forma.
+Cada ficha usa la plantilla versionada `AGENT-TEMPLATE-ADI.md`: identidad, misión, autoridad, contexto, principios, salida, escalamiento, riesgos, preguntas, referencias y changelog. Si una futura ficha requiere conocimiento que no está en el repositorio, debe señalarlo como faltante en vez de citar una ruta inexistente.
 
 ## 8. Alternativas consideradas
 
@@ -68,20 +83,20 @@ Cada ficha debe cumplir las secciones numeradas 1–7 de `.augura/AGENT_TEMPLATE
 
 ## 9. Riesgos
 
-- Si los documentos no se cargan en el orden indicado por el entorno de trabajo, el contrato no se aplica automáticamente.
+- Si los documentos no se cargan en el entorno de trabajo, el contrato no se aplica automáticamente.
 - La palabra “agente” puede confundirse con un agente runtime; debe conservarse la definición.
 - Los borradores de RFC/SPEC limitan el alcance de estas fichas; no deben tomarse como contrato aceptado.
 
 ## 10. Preguntas abiertas
 
-- ¿Qué ejecutor leerá estas fichas: Codex, Cursor, otro entorno o agentes del backend en runtime?
-- ¿Se requiere plantilla en cada prompt runtime o una política compartida inyectada por el orquestador?
-- ¿Qué persona revisará/aceptará cada ficha?
+- ¿Qué persona revisará/aceptará las fichas documentales?
+- ¿Qué contratos de entrada/salida tendrá el Constructor runtime al crear un snapshot sucesor?
+- ¿El flujo runtime será determinista en esta demo o incluirá un proveedor LLM como fallback para señales desconocidas?
 
 ## 11. Documentos relacionados
 
-- `.augura/AGENT_TEMPLATE.md`
-- `.augura/AKB-0001-Knowledge-Standard.md`
+- `docs/agents/AGENT-TEMPLATE-ADI.md`
+- `docs/spec/SPEC-0003-versioned-interpreter.md`
 - `docs/rfc/RFC-0001-central-quarkus.md`
 - `docs/architecture/ARC-0001-central-modular.md`
 

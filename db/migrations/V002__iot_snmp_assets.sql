@@ -11,7 +11,7 @@ ALTER TABLE simulator.logs
     ADD CONSTRAINT logs_subsystem_check
     CHECK (subsystem IN ('XFS','IO','NETWORK','CORE','FRAUD','RECONCILIATION','IOT','SNMP'));
 
-CREATE TABLE simulator.assets (
+CREATE TABLE IF NOT EXISTS simulator.assets (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     scenario_id uuid NOT NULL REFERENCES simulator.scenarios(id) ON DELETE CASCADE,
     asset_key text NOT NULL,
@@ -25,15 +25,17 @@ CREATE TABLE simulator.assets (
 );
 
 ALTER TABLE simulator.tickets
-    ADD COLUMN asset_id uuid REFERENCES simulator.assets(id) ON DELETE CASCADE;
+    ADD COLUMN IF NOT EXISTS asset_id uuid REFERENCES simulator.assets(id) ON DELETE CASCADE;
+ALTER TABLE simulator.tickets DROP CONSTRAINT IF EXISTS tickets_asset_reference_check;
 ALTER TABLE simulator.tickets
     ADD CONSTRAINT tickets_asset_reference_check CHECK (atm_id IS NOT NULL OR asset_id IS NOT NULL);
 
 ALTER TABLE simulator.logs
-    ADD COLUMN asset_id uuid REFERENCES simulator.assets(id) ON DELETE CASCADE;
+    ADD COLUMN IF NOT EXISTS asset_id uuid REFERENCES simulator.assets(id) ON DELETE CASCADE;
 ALTER TABLE simulator.logs ALTER COLUMN atm_id DROP NOT NULL;
+ALTER TABLE simulator.logs DROP CONSTRAINT IF EXISTS logs_asset_reference_check;
 ALTER TABLE simulator.logs
     ADD CONSTRAINT logs_asset_reference_check CHECK (atm_id IS NOT NULL OR asset_id IS NOT NULL);
 
-CREATE INDEX idx_sim_tickets_asset ON simulator.tickets(asset_id);
-CREATE INDEX idx_sim_logs_asset_time ON simulator.logs(asset_id, occurred_at);
+CREATE INDEX IF NOT EXISTS idx_sim_tickets_asset ON simulator.tickets(asset_id);
+CREATE INDEX IF NOT EXISTS idx_sim_logs_asset_time ON simulator.logs(asset_id, occurred_at);

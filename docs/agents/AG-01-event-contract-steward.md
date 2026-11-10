@@ -44,7 +44,7 @@ This agent may not:
 
 ## 4. Required Context
 
-1. Augura documents and order in `AGENT-TEMPLATE-ADI.md`.
+1. `docs/agents/README.md` and `docs/agents/AGENT-TEMPLATE-ADI.md`.
 2. `docs/spec/SPEC-0001-event-contract.md`.
 3. `context/01_arquitectura_y_contratos.md`.
 4. Producer-specific payload examples and task scope.

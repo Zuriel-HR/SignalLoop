@@ -7,7 +7,7 @@ owner: SignalLoop Architecture
 created: 2026-11-09
 updated: 2026-11-09
 reviewers: []
-depends_on: [AGENT_TEMPLATE, AKB-0001]
+depends_on: [RFC-0001]
 supersedes: []
 tags: [template, agents, governance]
 ---
@@ -65,13 +65,11 @@ This agent may not:
 
 Read in order:
 
-1. `.augura/AKB-0000-The-Augura-Engineering-Manifesto.md`
-2. `.augura/AKB-0001-Knowledge-Standard.md`
-3. `.augura/ROOT_MEMORY.md`
-4. `.augura/AGENT_TEMPLATE.md`
-5. `docs/agents/AGENT-TEMPLATE-ADI.md`
-6. Relevant accepted RFC/ADR/SPEC and task documents.
-7. This agent's instructions.
+1. `docs/agents/README.md`
+2. `docs/agents/AGENT-TEMPLATE-ADI.md`
+3. Relevant RFC/ARC/SPEC and context documents in this repository.
+4. Task-specific instructions and evidence.
+5. This agent's instructions.
 
 If any governing file is unavailable, report it and do not infer its contents.
 
