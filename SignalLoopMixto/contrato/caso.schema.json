@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "signalloop/caso.schema.json",
+  "title": "Caso del banco",
+  "description": "banco/casos/<caso>.json. Lo escribe el equipo. Ni el intérprete ni el Aprendiz lo modifican.",
+  "type": "object",
+  "required": ["caso", "nombre", "conjunto", "origen", "eventos", "fin", "esperado"],
+  "properties": {
+    "caso": {"type": "string"},
+    "nombre": {"type": "string"},
+    "conjunto": {"enum": ["banco", "reservado"]},
+    "origen": {"type": "string"},
+    "descripcion": {"type": "string"},
+    "fin": {"type": "string", "format": "date-time", "description": "Fin de la ventana de observación; el silencio se mide hasta aquí."},
+    "esperado": {
+      "type": "object",
+      "required": ["tickets_creados", "tickets_abiertos"],
+      "properties": {
+        "tickets_creados": {"type": "integer"},
+        "tickets_abiertos": {"type": "integer"},
+        "cierre_por": {"type": "string", "description": "Pista para el Aprendiz: valor del evento que debería cerrar el ticket."}
+      }
+    },
+    "eventos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "origen", "dispositivo", "ts", "grupo"],
+        "properties": {
+          "event_id": {"type": "string"},
+          "origen": {"type": "string"},
+          "dispositivo": {"type": "string"},
+          "ts": {"type": "string", "format": "date-time"},
+          "grupo": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["tipo_evento", "sensor", "status"],
+              "properties": {
+                "tipo_evento": {"enum": ["Status", "Operacion", "Inventario", "Alarma", "Recuperacion", "Reconocimiento", "Heartbeat"]},
+                "sensor": {"type": "string"},
+                "status": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

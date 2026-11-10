@@ -1,0 +1,7 @@
+jsonschema>=4.18
+
+[dev]
+pytest>=8
+
+[llm]
+openai>=1.40

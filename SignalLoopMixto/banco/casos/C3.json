@@ -1,0 +1,445 @@
+{
+  "caso": "C3",
+  "nombre": "Operación normal de cajero",
+  "conjunto": "banco",
+  "origen": "XFS",
+  "descripcion": "Dispensados, inventario y latidos sin incidentes. No debe abrirse ningún ticket.",
+  "eventos": [
+    {
+      "event_id": "XFS-ATM003-C3-0001",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:00:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0002",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:00:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0003",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:01:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0022",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:01:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Operacion",
+          "sensor": "Dispensador",
+          "status": {
+            "dispensa": [
+              {
+                "casetera": "P2",
+                "billetes": 3
+              }
+            ],
+            "resultado": "OK"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0004",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:01:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0005",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:02:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0023",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:02:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Inventario",
+          "sensor": "Dispensador",
+          "status": {
+            "caseteras": [
+              {
+                "id": "P1",
+                "denominacion": 200,
+                "saldo": 50
+              },
+              {
+                "id": "P2",
+                "denominacion": 100,
+                "saldo": 27
+              }
+            ]
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0006",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:02:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0007",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:03:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0008",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:03:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0009",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:04:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0010",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:04:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0011",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:05:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0012",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:05:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0013",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:06:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0014",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:06:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0024",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:06:40-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Operacion",
+          "sensor": "Dispensador",
+          "status": {
+            "dispensa": [
+              {
+                "casetera": "P1",
+                "billetes": 1
+              }
+            ],
+            "resultado": "OK"
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0015",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:07:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0016",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:07:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0017",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:08:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0018",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:08:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0019",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:09:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0020",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:09:30-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    },
+    {
+      "event_id": "XFS-ATM003-C3-0021",
+      "origen": "XFS",
+      "dispositivo": "ATM003",
+      "ts": "2026-11-09T14:10:00-06:00",
+      "grupo": [
+        {
+          "tipo_evento": "Heartbeat",
+          "sensor": "Agente",
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "status_procesamiento": 0,
+      "id_proceso": "IdP"
+    }
+  ],
+  "fin": "2026-11-09T14:10:00-06:00",
+  "esperado": {
+    "tickets_creados": 0,
+    "tickets_abiertos": 0
+  }
+}
